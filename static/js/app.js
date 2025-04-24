@@ -2,8 +2,7 @@ const username = "admin";
 
 function renderPost(post, isNew = false) {
   const template = document
-    .getElementById("post-template")
-    .content.cloneNode(true);
+    .getElementById("post-template").content.cloneNode(true);
   template.querySelector(".username").innerText = post.username;
   template.querySelector(".message").innerText = post.message;
   document.getElementById("feed").appendChild(template);
@@ -17,7 +16,7 @@ function renderPost(post, isNew = false) {
 }
 
 
-function submitPost() {
+async function submitPost() {
   const message = document.getElementById("postInput").value;
   try{
 const response = await fetch("/api/add_post",{
@@ -31,7 +30,7 @@ const response = await fetch("/api/add_post",{
   });
   if (response.ok){
     renderPost({username,message},True);//Pass isNew as True'
-    document.getElementById("postInput)".value) =""; //Clear the input box
+    document.getElementById("postInput").value =""; //Clear the input box
   }
   } catch(error)
   {

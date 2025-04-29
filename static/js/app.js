@@ -1,4 +1,7 @@
-const username = "admin";
+let username = localStorage.getItem("username");
+if (!username){
+  window.location.href = "/login";
+}
 
 function renderPost(post, isNew = false) {
   const template = document
@@ -29,7 +32,7 @@ const response = await fetch("/api/add_post",{
   })  
   });
   if (response.ok){
-    renderPost({username,message},True);//Pass isNew as True'
+    renderPost({username,message},true);//Pass isNew as True'
     document.getElementById("postInput").value =""; //Clear the input box
   }
   } catch(error)
@@ -42,6 +45,7 @@ const response = await fetch("/api/add_post",{
 
 window.onload = async () => {
   try {
+    document.getElementById("username").innerText = username;
     const response = await fetch("/api/posts");
     const posts = await response.json();
     posts.forEach((post) => renderPost(post));
